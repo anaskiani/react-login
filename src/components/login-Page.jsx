@@ -4,11 +4,15 @@ import React, { useState } from "react";
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [usernameError, setUsernameError] = useState("");
   const [dataInput, setDataInput] = useState("");
+
   const submitThis = () => {
     const data = { username: username, password: password };
     setDataInput([data]);
+    console.log(data);
   };
+
   return (
     <div className="md:my-28">
       <div className="flex justify-center text-3xl mt-28 mb-10">Login page</div>
@@ -19,7 +23,7 @@ export default function LoginPage() {
           <div className="flex justify-center text-2xl py-5">
             Login to your account
           </div>
-          <form action="" onSubmit={submitThis}>
+          <form onSubmit={submitThis}>
             <div className="flex flex-col">
               <label htmlFor="username" className="mx-5 md:mx-10 lg:mx-16 my-2">
                 Username
@@ -28,13 +32,35 @@ export default function LoginPage() {
                 type="text"
                 id="username"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => {
+                  const enteredUsername = e.target.value;
+                  setUsername(enteredUsername);
+
+                  // Validate the username
+                  const usernameRegex = /^[a-zA-Z0-9_]+$/; // Only allow letters, numbers, and underscore
+                  const isUsernameValid =
+                    enteredUsername.length >= 4 &&
+                    usernameRegex.test(enteredUsername);
+
+                  if (!isUsernameValid) {
+                    setUsernameError(
+                      "Username must be at least 4 characters long and only contain letters, numbers, and underscore."
+                    );
+                  } else {
+                    setUsernameError("");
+                  }
+                }}
                 autoComplete="on"
                 name="Enter username"
                 required
                 placeholder="Enter your username"
                 className="mx-5 md:mx-10 lg:mx-16 py-2 rounded-sm px-1 mb-3 "
               />
+              {usernameError && (
+                <div className="text-red-500 mx-5 md:mx-10 lg:mx-16">
+                  {usernameError}
+                </div>
+              )}
               <label htmlFor="password" className="mx-5 md:mx-10 lg:mx-16 my-2">
                 Password
               </label>
