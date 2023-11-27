@@ -98,7 +98,10 @@ export default function LoginPage() {
                   required
                   className="mx-5 md:mx-10 lg:mx-16 py-2 px-1 rounded-sm"
                 />
-                <button className="flex justify-start mx-5 md:mx-10 lg:mx-16 mt-3 text-indigo-500 font-semibold">
+                <button
+                  disabled
+                  className="flex justify-start mx-5 md:mx-10 lg:mx-16 mt-3 text-indigo-500 font-semibold"
+                >
                   Forgot password?
                 </button>
                 <button
